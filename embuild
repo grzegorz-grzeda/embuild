@@ -101,17 +101,33 @@ def generate_cmake_file(libraries_path: str):
         cmake_file.writelines(entries)
 
 
+def load_project():
+    project_file_directory = os.getcwd()
+    if len(argv) > 1:
+        parameter = argv[1]
+        if path.isdir(parameter):
+            project_file_directory = parameter
+            project = fetch_project_file(get_project_file_path(parameter))
+        else:
+            project_file_directory = path.abspath(path.dirname(parameter))
+            project = fetch_project_file(path.abspath(parameter))
+    else:
+        project = fetch_project_file(
+            get_project_file_path(project_file_directory))
+    return project, project_file_directory
+
+
+def clean_libraries_directory(libraries_path):
+    I(f"Cleaning '{libraries_path}'")
+    rmtree(libraries_path, ignore_errors=True)
+
+
 def main():
-    print(argv)
     initialize_logging('embuild')
     try:
-        project_file_directory = os.getcwd()
-        if len(argv) > 1:
-            project_file_directory =  path.dirname(argv[1])
-
-        project = fetch_project_file(get_project_file_path(project_file_directory))
+        project, project_file_directory = load_project()
         libraries_path = get_libraries_path(project, project_file_directory)
-        rmtree(libraries_path, ignore_errors=True)
+        clean_libraries_directory(libraries_path)
 
         while True:
             libraries_to_download_from_project = get_libraries(project)
