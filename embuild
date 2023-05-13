@@ -90,7 +90,7 @@ def get_libraries(project):
 def clone_library(library, destination_path):
     I(f"Cloning '{library}'")
     call(f'git clone {repository_path(library)} {destination_path}',
-         cwd=os.getcwd(), shell=True, stdout=DEVNULL, stderr=DEVNULL)
+         cwd=os.getcwd(), shell=True)
 
 
 def generate_cmake_file(libraries_path: str):
