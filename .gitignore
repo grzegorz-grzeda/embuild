@@ -1,5 +1,6 @@
 # project specific
 test/libraries
+test/packages
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

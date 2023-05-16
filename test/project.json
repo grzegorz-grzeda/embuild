@@ -1,5 +1,8 @@
 {
     "libraries": [
         "event-handler"
+    ],
+    "packages":[
+        "simple-unit-tests"
     ]
 }
